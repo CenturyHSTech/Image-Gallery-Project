@@ -164,3 +164,7 @@ cython_debug/
 
 # VSCode
 .vscode/
+
+# Teacher testing test files
+image_gallery/wiliwonka.html
+image_gallery/wili_images/
