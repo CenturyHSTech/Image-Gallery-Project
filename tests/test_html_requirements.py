@@ -10,12 +10,16 @@ required_elements = [("doctype", 1),
                      ("head", 1),
                      ("title", 1),
                      ("h1", 1),
-                     ("p", 2)]
+                     ("container (div, section, or article)", 1),
+                     ("figure", 9),
+                     ("img", 9),
+                     ("a", 9),
+                     ("figcaption", 9)]
 
 
 @pytest.fixture
 def files():
-    files = clerk.get_all_files_of_type("single_html_page/", "html")
+    files = clerk.get_all_files_of_type("project/", "html")
     return files
 
 
@@ -24,7 +28,12 @@ def test_files_for_required_elements(element, num, files):
     if not files:
         assert False
     for file in files:
-        actual = html.get_num_elements_in_file(element, file)
+        if "container" in element:
+            actual = html.get_num_elements_in_file("div", file)
+            actual += html.get_num_elements_in_file("section", file)
+            actual += html.get_num_elements_in_file("article", file)
+        else:
+            actual = html.get_num_elements_in_file(element, file)
         assert actual >= num
 
 

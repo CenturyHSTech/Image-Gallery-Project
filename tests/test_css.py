@@ -1,22 +1,34 @@
 """
-Test CSS.
+Test CSS Requirements.
 """
 import pytest
+import file_clerk.clerk as clerk
 from webcode_tk import css_tools as css
-from webcode_tk import color_tools
 from webcode_tk import html_tools as html
 
-
-project_path = "single_html_page/"
+project_path = "project/"
 html_files = html.get_all_html_files(project_path)
 styles_by_html_files = css.get_styles_by_html_files(project_path)
-global_color_rules = css.get_global_colors(project_path)
-
-global_color_contrast_tests = []
+global_color_rules = []
 for file in html_files:
-    goal = "Normal AAA"
-    rule = global_color_rules.get(file)
-    global_color_contrast_tests.append((file, rule, goal, True))
+    global_color_rules.append(css.get_global_colors(file))
+global_color_contrast_tests = []
+no_style_attribute_tests = []
+
+
+def get_all_color_rule_results(project_path):
+    color_rule_results = css.get_project_color_contrast(project_path)
+    return color_rule_results
+
+
+def set_style_attribute_tests(path):
+    results = []
+    for file in html_files:
+        data = html.get_style_attribute_data(file)
+        if data:
+            for datum in data:
+                results.append(datum)
+    return results
 
 
 def get_unique_font_families(project_folder):
@@ -60,23 +72,92 @@ def get_font_family_data(font_tests):
     return rules_data
 
 
+def prep_global_color_tests(global_color_contrast_tests,
+                            global_color_rules):
+    for rule in global_color_rules:
+        if rule:
+            path = list(rule.keys())[0]
+            file = clerk.get_file_name(path)
+            data = rule[path]
+            if isinstance(data, list):
+                if len(data) == 1:
+                    data = data[0]
+            selector = data.get("selector")
+            ratio = data.get("contrast_ratio")
+            passes = data.get("passes_normal_aaa")
+            global_color_contrast_tests.append(
+                (file, selector, ratio, passes)
+            )
+
+
+prep_global_color_tests(global_color_contrast_tests,
+                        global_color_rules)
 font_families_tests = get_unique_font_families(project_path)
 font_rules_results = get_font_rules_data(font_families_tests)
 font_selector_results = get_font_selector_data(font_families_tests)
 font_family_results = get_font_family_data(font_families_tests)
+all_color_rules_results = get_all_color_rule_results(project_path)
+style_attributes_data = set_style_attribute_tests(project_path)
+if not style_attributes_data:
+    style_attributes_data = [(file, "no tag", "applies style attribute")]
+link_colors = css.get_link_color_data(project_path)
 
 
-@pytest.mark.parametrize("file,rule,goal,expected",
+@pytest.fixture
+def project_folder():
+    return project_path
+
+
+@pytest.fixture
+def all_color_data():
+    return all_color_rules_results
+
+
+@pytest.fixture
+def html_styles():
+    return styles_by_html_files
+
+
+@pytest.fixture
+def html_docs():
+    return html_files
+
+
+@pytest.fixture
+def link_color_details():
+    return link_colors
+
+
+@pytest.mark.parametrize("file,tag,value", style_attributes_data)
+def test_files_for_style_attribute_data(file, tag, value):
+    if tag == "no tag" and value == "applies style attribute":
+        results = f"{file} passes with no style attributes."
+        expected = results
+        assert results == expected
+    else:
+        results = f"Tag: <{tag}> from '{file}' has a style attribute"
+        assert not results
+
+
+def test_files_for_has_style_attributes(project_folder):
+    results = "No style attributes found"
+    expected = results
+    html_files = html.get_all_html_files(project_folder)
+    for file in html_files:
+        has_style_attribute = html.has_style_attribute_data(file)
+        if has_style_attribute:
+            filename = clerk.get_file_name(file)
+            results = f"{filename} has style attributes"
+    assert expected == results
+
+
+@pytest.mark.parametrize("file,selector,ratio,results",
                          global_color_contrast_tests)
-def test_files_for_global_color_contrast(file, rule, goal, expected):
-    # NOTE: make sure the rule is not a list (happens if there's only 1 file)
-    if isinstance(rule, list) and len(rule) == 1:
-        rule = rule[0]
-    bg_color = rule.get("background-color")
-    bg_color = color_tools.get_hex(bg_color)
-    color = rule.get("color")
-    color = color_tools.get_hex(color)
-    result = color_tools.passes_color_contrast(goal, bg_color, color)
+def test_files_for_global_color_contrast(file, selector, ratio, results):
+    result = f"Color contrast for {selector} passes with {ratio} ratio."
+    expected = result
+    if not results:
+        results = f"Color contrast for {file} failed."
     assert result == expected
 
 
@@ -93,3 +174,34 @@ def test_files_for_for_enough_font_selectors(file, passes_selector):
 @pytest.mark.parametrize("file,passes_font_families", font_selector_results)
 def test_files_for_2_font_families_max(file, passes_font_families):
     assert passes_font_families
+
+
+def test_link_color_details_for_links_targeted(link_color_details):
+    assert link_color_details
+
+
+@pytest.mark.parametrize("file,sel,goal,col,bg,ratio,passes",
+                         link_colors)
+def test_link_color_details_for_passing_color_contrast(file, sel, goal,
+                                                       col, bg, ratio,
+                                                       passes):
+    filename = file.split("/")[-1]
+    if passes:
+        results = f"Color contrast for {sel} in {filename} passes at {ratio}"
+        expected = results
+        assert results == expected
+    else:
+        results = f"Color contrast for {sel} in {filename} fails at {ratio}"
+        expected = f"Color contrast for {sel} in {filename} passes."
+        assert results == expected
+
+
+def test_container_uses_flex_properties_for_layout():
+    # TODO get all container permutations and look for flex property
+    assert False
+
+
+def test_figure_styles_applied():
+    # TODO get all styles applied to the figure tag and check for styles
+    required_properties = ["margin", "border", "padding", "background-color"]
+    assert False

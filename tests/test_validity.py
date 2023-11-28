@@ -7,7 +7,7 @@ from webcode_tk import validator_tools as validator
 
 
 html_results = []
-html_files = clerk.get_all_files_of_type("single_html_page/", "html")
+html_files = clerk.get_all_files_of_type("project/", "html")
 for file in html_files:
     report = validator.get_markup_validity(file)
     expected = f"{file}: No Errors Found."
