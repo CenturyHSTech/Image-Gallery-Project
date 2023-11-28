@@ -28,7 +28,7 @@ Students will code and design an image gallery project that contains a minimum o
     - Must pass at a AAA rating for any non-heading
     - May pass at a AA rating for headings
 * The container uses the `flex` property and related flex properties to contribute to the layout.
-* The figures are styled using the `margin`, `border`, `padding`, `border-radius`, and `background-color` properties
+* The figures are styled using the `margin`, `border`, `padding`, and `background-color` properties
 
 ### Design Requirements
 * Content must be visible and readable (with high contrast)
