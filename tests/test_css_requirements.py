@@ -90,6 +90,49 @@ def prep_global_color_tests(global_color_contrast_tests,
             )
 
 
+def get_figure_property_data(html_styles):
+    figure_property_data = []
+    required_properties = ["border", "padding", "background-color"]
+    has_required_properties = {}
+    for prop in required_properties:
+        has_required_properties[prop] = False
+    for styles in html_styles:
+        file = styles.get("file")
+        selectors = html.get_possible_selectors_by_tag(file, "figure")
+        for selector in selectors:
+            sheets = styles.get("stylesheets")
+            for sheet in sheets:
+                block = css.get_declaration_block_from_selector(selector,
+                                                                sheet)
+                dec_block = css.DeclarationBlock(block)
+                get_required_properties(required_properties,
+                                        has_required_properties, dec_block)
+        # Loop through required properties and all must pass
+        missing = []
+        for key in has_required_properties:
+            uses_prop = has_required_properties.get(key)
+            if not uses_prop:
+                missing.append(key)
+        num_missing = len(missing)
+        figure_property_data.append((file, num_missing))
+    return figure_property_data
+
+
+def get_required_properties(required_properties, has_required_properties,
+                            dec_block):
+    for declaration in dec_block.declarations:
+        prop = declaration.property
+        if prop in required_properties:
+            has_required_properties[prop] = True
+        elif "background" in prop:
+            # using shorthand?
+            split_values = declaration.value.split()
+            for value in split_values:
+                if css.color_tools.is_hex(value):
+                    has_required_properties["background-color"] = True
+
+
+figure_property_data = get_figure_property_data(styles_by_html_files)
 prep_global_color_tests(global_color_contrast_tests,
                         global_color_rules)
 font_families_tests = get_unique_font_families(project_path)
@@ -196,12 +239,42 @@ def test_link_color_details_for_passing_color_contrast(file, sel, goal,
         assert results == expected
 
 
-def test_container_uses_flex_properties_for_layout():
-    # TODO get all container permutations and look for flex property
-    assert False
+def test_container_uses_flex_properties_for_layout(html_styles):
+    # get all container permutations and look for flex property
+    containers = []
+
+    # assume True until proven otherwise
+    applies_flex = True
+    for styles in html_styles:
+        file = styles.get("file")
+        div_selectors = html.get_possible_selectors_by_tag(file, "div")
+        section_selectors = html.get_possible_selectors_by_tag(file, "section")
+        article_selectors = html.get_possible_selectors_by_tag(file, "article")
+        containers += div_selectors
+        containers += section_selectors
+        containers += article_selectors
+    for styles in html_styles:
+        has_flex = False
+        for selector in containers:
+            sheets = styles.get("stylesheets")
+            for sheet in sheets:
+                declaration_block = css.get_declaration_block_from_selector(
+                    selector, sheet
+                )
+                if declaration_block:
+                    if ("display:flex" in declaration_block or
+                            "display: flex" in declaration_block):
+                        has_flex = True
+        applies_flex = applies_flex and has_flex
+    assert applies_flex
 
 
-def test_figure_styles_applied():
-    # TODO get all styles applied to the figure tag and check for styles
-    required_properties = ["margin", "border", "padding", "background-color"]
-    assert False
+@pytest.mark.parametrize("file,num_missing", figure_property_data)
+def test_figure_styles_applied(file, num_missing):
+    filename = clerk.get_file_name(file)
+    expected = f"{filename} has all figure properties applied."
+    if num_missing == 0:
+        results = expected
+    else:
+        results = f"{filename} has {num_missing} figure properties missing"
+    assert expected == results
