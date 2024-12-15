@@ -2,11 +2,11 @@
 Test for HTML requirements
 """
 import pytest
-from webcode_tk import html_tools
+from webcode_tk import html
 from webcode_tk import validator_tools as validator
 
 project_dir = "project/"
-all_html_files = html_tools.get_all_html_files(project_dir)
+all_html_files = html.get_all_html_files(project_dir)
 
 # List of required elements (per web page)
 required_elements = [("doctype", 1),
@@ -22,10 +22,10 @@ min_required_elements = [
     ("figcaption", 9)]
 
 
-exact_number_of_elements = html_tools.get_number_of_elements_per_file(
+exact_number_of_elements = html.get_number_of_elements_per_file(
     project_dir, required_elements
 )
-min_number_of_elements = html_tools.get_number_of_elements_per_file(
+min_number_of_elements = html.get_number_of_elements_per_file(
     project_dir, min_required_elements
 )
 html_validation_results = validator.get_project_validation(project_dir)
@@ -33,7 +33,7 @@ html_validation_results = validator.get_project_validation(project_dir)
 
 @pytest.fixture
 def html_files():
-    html_files = html_tools.get_all_html_files(project_dir)
+    html_files = html.get_all_html_files(project_dir)
     return html_files
 
 
@@ -45,7 +45,7 @@ def test_has_index_file(html_files):
 def test_files_for_exact_number_of_elements(file, element, num):
     if not html_files:
         assert False
-    actual = html_tools.get_num_elements_in_file(element, file)
+    actual = html.get_num_elements_in_file(element, file)
     assert actual == num
 
 
@@ -58,9 +58,9 @@ def test_files_for_minimum_number_of_elements(file, element, num):
         actual = 0
         for el in elements:
             el = el.strip()
-            actual += html_tools.get_num_elements_in_file(el, file)
+            actual += html.get_num_elements_in_file(el, file)
     else:
-        actual = html_tools.get_num_elements_in_file(element, file)
+        actual = html.get_num_elements_in_file(element, file)
     assert actual >= num
 
 
