@@ -1,5 +1,5 @@
-# Single-HTML-Page-Project
-Students will design a single web page project that matches their project plan that they submitted in class.
+# Image-Gallery-Project
+Students will design an image gallery project that showcases a minimum of 9 image thumbnails related to a theme, and these thumbnails link to a full-sized image.
 
 ## Project Requirements
 Are listed in the README file in the `image_gallery` folder.
