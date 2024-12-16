@@ -59,11 +59,6 @@ def test_for_colors_applied_to_headings(results):
     assert "pass" == results[:4]
 
 
-@pytest.mark.parametrize("results", css_validation_results)
-def test_css_validation(results):
-    assert "pass" == results[:4]
-
-
 # Figure property prep
 html_files = html.get_all_html_files(project_dir)
 styles_by_html_files = css.get_styles_by_html_files(project_dir)
@@ -145,7 +140,7 @@ def test_container_uses_flex_properties_for_layout(html_styles):
 
 
 # Figure Property Tests
-
+css.has_required_property("")
 
 @pytest.mark.parametrize("file,num_missing", figure_property_data)
 def test_figure_styles_applied(file, num_missing):

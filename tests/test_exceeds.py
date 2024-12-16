@@ -5,7 +5,7 @@ It should be weighted at 1 point for each type of test (2 is recommended)
 import pytest
 import file_clerk.clerk as clerk
 from webcode_tk import css_tools as css
-from webcode_tk import html as html
+from webcode_tk import html_tools as html
 
 project_dir = "project/"
 
@@ -26,7 +26,7 @@ def html_files():
     return html_files
 
 @pytest.mark.parametrize("file,element,num", min_number_of_elements)
-def test_files_for_minimum_number_of_elements(file, element, num):
+def test_for_html_exceeds_number_of_elements(file, element, num):
     if not html_files:
         assert False
     if "or" in element.lower():
@@ -38,3 +38,12 @@ def test_files_for_minimum_number_of_elements(file, element, num):
     else:
         actual = html.get_num_elements_in_file(element, file)
     assert actual >= num
+
+
+def test_for_html_exceeds_umber_of_image_files():
+    image_files = []
+    image_files += clerk.get_all_files_of_type(project_dir, "jpg")
+    image_files += clerk.get_all_files_of_type(project_dir, "png")
+    image_files += clerk.get_all_files_of_type(project_dir, "gif")
+    image_files += clerk.get_all_files_of_type(project_dir, "webp")
+    assert len(image_files) >= 24

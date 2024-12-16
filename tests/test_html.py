@@ -2,7 +2,8 @@
 Test for HTML requirements
 """
 import pytest
-from webcode_tk import html
+import file_clerk.clerk as clerk
+from webcode_tk import html_tools as html
 from webcode_tk import validator_tools as validator
 
 project_dir = "project/"
@@ -73,3 +74,12 @@ def test_passes_html_validation(html_files):
         for result in results:
             errors.append(result.get("message"))
     assert not errors
+
+
+def test_number_of_image_files_for_proficient():
+    image_files = []
+    image_files += clerk.get_all_files_of_type(project_dir, "jpg")
+    image_files += clerk.get_all_files_of_type(project_dir, "png")
+    image_files += clerk.get_all_files_of_type(project_dir, "gif")
+    image_files += clerk.get_all_files_of_type(project_dir, "webp")
+    assert len(image_files) >= 18
