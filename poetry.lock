@@ -39,19 +39,19 @@ wheel = ">=0.23.0,<1.0"
 
 [[package]]
 name = "attrs"
-version = "24.2.0"
+version = "24.3.0"
 description = "Classes Without Boilerplate"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "attrs-24.2.0-py3-none-any.whl", hash = "sha256:81921eb96de3191c8258c199618104dd27ac608d9366f5e35d011eae1867ede2"},
-    {file = "attrs-24.2.0.tar.gz", hash = "sha256:5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"},
+    {file = "attrs-24.3.0-py3-none-any.whl", hash = "sha256:ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308"},
+    {file = "attrs-24.3.0.tar.gz", hash = "sha256:8f5c07333d543103541ba7be0e2ce16eeee8130cb0b3f9238ab904ce1e85baff"},
 ]
 
 [package.extras]
 benchmark = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-codspeed", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 cov = ["cloudpickle", "coverage[toml] (>=5.3)", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
-dev = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
+dev = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pre-commit-uv", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 docs = ["cogapp", "furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-towncrier", "towncrier (<24.7)"]
 tests = ["cloudpickle", "hypothesis", "mypy (>=1.11.1)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-xdist[psutil]"]
 tests-mypy = ["mypy (>=1.11.1)", "pytest-mypy-plugins"]
@@ -523,13 +523,13 @@ devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benc
 
 [[package]]
 name = "file-clerk"
-version = "1.1.5"
+version = "1.1.7"
 description = "A collection of functions for dealing with files and file content."
 optional = false
 python-versions = "<4.0,>=3.8"
 files = [
-    {file = "file_clerk-1.1.5-py3-none-any.whl", hash = "sha256:4ac31c8b710ca86630422a20f56b84b22019d96ec405dbca088659bcb7a90f42"},
-    {file = "file_clerk-1.1.5.tar.gz", hash = "sha256:f29442a5652759f6dd5fe9e991860d54fcff4e9651949254fc8811fef6df2b2d"},
+    {file = "file_clerk-1.1.7-py3-none-any.whl", hash = "sha256:1f6e9896bcc50a09260f3563f94add79c315b90a016df2246df36db79fe9a6a9"},
+    {file = "file_clerk-1.1.7.tar.gz", hash = "sha256:a3ab6d69b8a5a856303f63293076fde20e73163b2526941b7debc29c7eb3e07c"},
 ]
 
 [package.dependencies]
