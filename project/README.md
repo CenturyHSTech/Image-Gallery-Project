@@ -5,21 +5,32 @@ Put your html and css files in here.
 Students will code and design an image gallery project that contains a minimum of 9 related thumbnail-sized images that when clicked open up a full-sized version of those images. The design of the layout should be a grid of images that are styled using fonts, colors, borders, and other styles.
 
 ## Requirements
+### Folder and file structure requirements
+* Create a single web page named `index.html`
+* Create a folder titled, `images` (all lowercase letters)
+* at least 18 images in all (each stored in the images folder)
+  - at least 9 full-sized images
+  - at least 9 thumbnail (cropped and resized to no wider than 450px) 
+    + one for each of the full-sized images
+
 ### HTML requirements
 * A single web page (HTML file)
 * 1 or more stylesheets (a style tag can count)
 * All standard HTML5 required tags (`DOCTYPE`, `html`, `head`, `title`, `body`)
 * A title (using the proper tag)
-* A container element for your images (could be a `div`, `section`, or `article`)
-* A minimum of 9 images each of which...
-    - are stored in a single `figure`
-    - contain a brief description using the `alt` attribute
-    - wrapped in a link that links to the full-sized image
-    - followed by a caption with appropriate credit given
+* A `header` element with your title (in a `h1` tag)
+* A `main` element where you'll put all your `figure` elements.
+* A minimum of 9 `figure` elements
+* Each `figure` element needs to contain the following
+    - A thumbnail image (no wider than 450px)
+        - The image tag must contain a brief description using the `alt` attribute
+    - Wrap a link around the image that will link to the full-sized image
+    - Add a caption after the link and image with appropriate credit given (should be a `figcaption` surrounding a `cite` tag)
+    - Unless you took the image yourself, the caption should also link to the source of the image.
 
 ### Validity Requirements
-* No HTML errors
-* No CSS errors
+* No HTML errors (this will be tested in the html tests)
+* No CSS errors (this will be tested in the css tests)
 
 ### CSS Requirements
 * A font pairing.

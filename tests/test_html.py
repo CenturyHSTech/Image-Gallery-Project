@@ -14,14 +14,16 @@ required_elements = [("doctype", 1),
                      ("html", 1),
                      ("head", 1),
                      ("title", 1),
-                     ("h1", 1)]
+                     ("h1", 1),
+                     ("header", 1),
+                     ("main", 1),
+                     ("footer", 1)]
+
 min_required_elements = [
-    ("div or section or article or main", 1),
     ("figure", 9),
     ("img", 9),
     ("a", 9),
     ("figcaption", 9)]
-
 
 exact_number_of_elements = html.get_number_of_elements_per_file(
     project_dir, required_elements

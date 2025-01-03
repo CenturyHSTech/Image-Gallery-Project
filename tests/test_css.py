@@ -4,7 +4,6 @@ Test CSS Requirements.
 import pytest
 import file_clerk.clerk as clerk
 from webcode_tk import css_tools as css
-from webcode_tk import html_tools as html
 from webcode_tk import validator_tools as validator
 
 project_dir = "project/"
@@ -58,91 +57,14 @@ def test_font_requirements(results):
 def test_for_colors_applied_to_headings(results):
     assert "pass" == results[:4]
 
+applied_properties_goals = {
+        "figure": ("margin", "padding", "border"),
+    }
 
-# Figure property prep
-html_files = html.get_all_html_files(project_dir)
-styles_by_html_files = css.get_styles_by_html_files(project_dir)
+applied_properties_report = css.get_properties_applied_report(project_dir, 
+                                                              applied_properties_goals)
 
-
-def get_required_properties(required_properties, has_required_properties,
-                            dec_block):
-    for declaration in dec_block.declarations:
-        prop = declaration.property
-        if prop in required_properties:
-            has_required_properties[prop] = True
-        elif "background" in prop:
-            # using shorthand?
-            split_values = declaration.value.split()
-            for value in split_values:
-                if css.color_tools.is_hex(value):
-                    has_required_properties["background-color"] = True
-
-
-def get_figure_property_data(html_styles):
-    figure_property_data = []
-    required_properties = ["border", "padding", "background-color"]
-    has_required_properties = {}
-    for prop in required_properties:
-        has_required_properties[prop] = False
-    for styles in html_styles:
-        file = styles.get("file")
-        selectors = html.get_possible_selectors_by_tag(file, "figure")
-        for selector in selectors:
-            sheets = styles.get("stylesheets")
-            for sheet in sheets:
-                block = css.get_declaration_block_from_selector(selector,
-                                                                sheet)
-                dec_block = css.DeclarationBlock(block)
-                get_required_properties(required_properties,
-                                        has_required_properties, dec_block)
-        # Loop through required properties and all must pass
-        missing = []
-        for key in has_required_properties:
-            uses_prop = has_required_properties.get(key)
-            if not uses_prop:
-                missing.append(key)
-        num_missing = len(missing)
-        figure_property_data.append((file, num_missing))
-    return figure_property_data
-
-
-figure_property_data = get_figure_property_data(styles_by_html_files)
-
-
-def test_container_uses_flex_properties_for_layout(html_styles):
-    # get all container permutations and look for flex property
-    containers = []
-
-    # assume True until proven otherwise
-    applies_flex = True
-    for styles in html_styles:
-        file = styles.get("file")
-        div_selectors = html.get_possible_selectors_by_tag(file, "div")
-        section_selectors = html.get_possible_selectors_by_tag(file, "section")
-        article_selectors = html.get_possible_selectors_by_tag(file, "article")
-        containers += div_selectors
-        containers += section_selectors
-        containers += article_selectors
-    for styles in html_styles:
-        has_flex = False
-        for selector in containers:
-            sheets = styles.get("stylesheets")
-            for sheet in sheets:
-                declaration_block = css.get_declaration_block_from_selector(
-                    selector, sheet
-                )
-                if declaration_block:
-                    if ("display:flex" in declaration_block or
-                            "display: flex" in declaration_block):
-                        has_flex = True
-        applies_flex = applies_flex and has_flex
-    assert applies_flex
-
-
-# Figure Property Tests
-css.has_required_property("")
-
-@pytest.mark.parametrize("file,num_missing", figure_property_data)
+@pytest.mark.parametrize("file,num_missing", applied_properties_report)
 def test_figure_styles_applied(file, num_missing):
     filename = clerk.get_file_name(file)
     expected = f"{filename} has all figure properties applied."
