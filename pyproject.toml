@@ -10,7 +10,7 @@ python = "^3.9"
 html5validator = "^0.4.2"
 pytest = "^7.4.0"
 file-clerk = "*"
-webcode-tk = "^1.1.4"
+webcode-tk = "*"
 
 
 [build-system]

@@ -2,7 +2,6 @@
 Test CSS Requirements.
 """
 import pytest
-import file_clerk.clerk as clerk
 from webcode_tk import css_tools as css
 from webcode_tk import validator_tools as validator
 
@@ -58,18 +57,14 @@ def test_for_colors_applied_to_headings(results):
     assert "pass" == results[:4]
 
 applied_properties_goals = {
-        "figure": ("margin", "padding", "border"),
+        "figure": {
+            "properties": ("margin", "padding", "border"),
+        }
     }
 
 applied_properties_report = css.get_properties_applied_report(project_dir, 
                                                               applied_properties_goals)
 
-@pytest.mark.parametrize("file,num_missing", applied_properties_report)
-def test_figure_styles_applied(file, num_missing):
-    filename = clerk.get_file_name(file)
-    expected = f"{filename} has all figure properties applied."
-    if num_missing == 0:
-        results = expected
-    else:
-        results = f"{filename} has {num_missing} figure properties missing"
-    assert expected == results
+@pytest.mark.parametrize("results", applied_properties_report)
+def test_figure_styles_applied(results):
+    assert "fail:" not in results[:5]
