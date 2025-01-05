@@ -4,7 +4,6 @@ It should be weighted at 1 point for each type of test (2 is recommended)
 """
 import pytest
 import file_clerk.clerk as clerk
-from webcode_tk import css_tools as css
 from webcode_tk import html_tools as html
 
 project_dir = "project/"
@@ -18,12 +17,6 @@ min_required_elements = [
 min_number_of_elements = html.get_number_of_elements_per_file(
     project_dir, min_required_elements
 )
-
-advanced_properties_goals = {
-        "figure": ("box-shadow", "border-radius", "animation"),
-    }
-advanced_properties_report = css.get_properties_applied_report(project_dir,
-                                                               advanced_properties_goals)
 
 @pytest.fixture
 def html_files():
@@ -45,16 +38,10 @@ def test_for_html_exceeds_number_of_elements(file, element, num):
     assert actual >= num
 
 
-def test_for_html_exceeds_umber_of_image_files():
+def test_for_html_exceeds_number_of_image_files():
     image_files = []
     image_files += clerk.get_all_files_of_type(project_dir, "jpg")
     image_files += clerk.get_all_files_of_type(project_dir, "png")
     image_files += clerk.get_all_files_of_type(project_dir, "gif")
     image_files += clerk.get_all_files_of_type(project_dir, "webp")
     assert len(image_files) >= 24
-
-def test_for_advanced_properties_applied():
-    applied = 0
-    for item in advanced_properties_report:
-        print(item)
-    assert applied >= 2

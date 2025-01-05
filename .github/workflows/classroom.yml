@@ -42,15 +42,26 @@ jobs:
         timeout: 10
         max-score: 38
 
-    - name: Test Exceeds - For The Win
-      id: test-exceeds
+    - name: Test HTML Exceeds - For The Win
+      id: test-html-exceeds
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: Test Exceeds - For The Win
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
-        command: . ./venv/bin/activate && pytest tests/test_exceeds.py
+        command: . ./venv/bin/activate && pytest tests/test_html_exceeds.py
         timeout: 10
-        max-score: 3
+        max-score: 1
+
+    - name: Test CSS Exceeds - For The Win
+      id: test-css-exceeds
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test Exceeds - For The Win
+        setup-command: . ./venv/bin/activate && pip install -r requirements.txt
+        command: . ./venv/bin/activate && pytest tests/test_css_exceeds.py
+        timeout: 10
+        max-score: 1
+
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
