@@ -1,7 +1,6 @@
 name: Autograding Tests
 'on':
 - push
-- workflow_dispatch
 - repository_dispatch
 permissions:
   checks: write
@@ -67,8 +66,8 @@ jobs:
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-HTML_RESULTS: "${{steps.test-html.outputs.result}}"
-        TEST-HTML_EXCEEDS_FTW: "${{steps.test-html-exceeds.outputs.result}}"
+        TEST-HTML_EXCEEDS: "${{steps.test-html-exceeds.outputs.result}}"
         TEST-CSS_RESULTS: "${{steps.test-css.outputs.result}}"
-        TEST_CSS_EXCEEDS_FTW: "${{steps.test-css-exceeds.outputs.result}}"
+        TEST_CSS_EXCEEDS: "${{steps.test-css-exceeds.outputs.result}}"
       with:
         runners: test-html,test-html-exceeds,test-css,test-css-exceeds
