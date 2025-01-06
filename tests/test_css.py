@@ -2,6 +2,7 @@
 Test CSS Requirements.
 """
 import pytest
+from webcode_tk import cascade_tools as cascade
 from webcode_tk import css_tools as css
 from webcode_tk import validator_tools as validator
 
@@ -19,7 +20,7 @@ css_validation_results = validator.get_project_validation(
 )
 
 color_contrast_results = []
-color_contrast_results = css.get_project_color_contrast_report(project_dir)
+color_contrast_results = cascade.get_color_contrast_report(project_dir)
 
 applying_styles_results = css.styles_applied_report(project_dir)
 font_data = css.fonts_applied_report(project_dir)
@@ -43,7 +44,7 @@ def test_if_file_applies_styles(results):
 
 @pytest.mark.parametrize("results",
                          color_contrast_results)
-def test_global_colors(results):
+def test_color_contrast(results):
     assert "pass" == results[:4]
 
 
