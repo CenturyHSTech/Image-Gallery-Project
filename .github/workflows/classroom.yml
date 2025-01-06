@@ -1,6 +1,8 @@
 name: Autograding Tests
 'on':
 - push
+- workflow_dispatch
+- repository_dispatch
 permissions:
   checks: write
   actions: read
@@ -21,41 +23,41 @@ jobs:
     - name: Create virtual environment
       run: python -m venv venv
 
-    - name: Test HTML
+    - name: 'Test HTML'
       id: test-html
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Test HTML
+        test-name: 'Test HTML'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
         command: . ./venv/bin/activate && pytest tests/test_html.py
         timeout: 10
         max-score: 3
 
-    - name: Test HTML Exceeds
+    - name: 'Test HTML Exceeds'
       id: test-html-exceeds
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Test HTML Exceeds FTW
+        test-name: 'Test HTML Exceeds'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
         command: . ./venv/bin/activate && pytest tests/test_html_exceeds.py
         timeout: 10
         max-score: 1
   
-    - name: Test CSS
+    - name: 'Test CSS'
       id: test-css
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Test CSS
+        test-name: 'Test CSS'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
         command: . ./venv/bin/activate && pytest tests/test_css.py
         timeout: 10
         max-score: 3
 
-    - name: Test CSS Exceeds
+    - name: 'Test CSS Exceeds'
       id: test-css-exceeds
       uses: classroom-resources/autograding-command-grader@v1
       with:
-        test-name: Test CSS Exceeds - For The Win
+        test-name: 'Test CSS Exceeds'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
         command: . ./venv/bin/activate && pytest tests/test_css_exceeds.py
         timeout: 10
@@ -69,4 +71,4 @@ jobs:
         TEST-CSS_RESULTS: "${{steps.test-css.outputs.result}}"
         TEST_CSS_EXCEEDS_FTW: "${{steps.test-css-exceeds.outputs.result}}"
       with:
-        runners: test-html,test-css
+        runners: test-html,test-html-exceeds,test-css,test-css-exceeds
