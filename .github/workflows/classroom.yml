@@ -33,7 +33,7 @@ jobs:
         max-score: 3
 
     - name: 'Test HTML Exceeds'
-      id: test-html-exceeds
+      id: test-html_exceeds
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: 'Test HTML Exceeds'
@@ -53,7 +53,7 @@ jobs:
         max-score: 3
 
     - name: 'Test CSS Exceeds'
-      id: test-css-exceeds
+      id: test-css_exceeds
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: 'Test CSS Exceeds'
@@ -66,8 +66,8 @@ jobs:
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-HTML_RESULTS: "${{steps.test-html.outputs.result}}"
-        TEST-HTML_EXCEEDS: "${{steps.test-html-exceeds.outputs.result}}"
+        TEST-HTML_EXCEEDS: "${{steps.test-html_exceeds.outputs.result}}"
         TEST-CSS_RESULTS: "${{steps.test-css.outputs.result}}"
-        TEST_CSS_EXCEEDS: "${{steps.test-css-exceeds.outputs.result}}"
+        TEST_CSS_EXCEEDS: "${{steps.test-css_exceeds.outputs.result}}"
       with:
-        runners: test-html,test-html-exceeds,test-css,test-css-exceeds
+        runners: test-html,test-html_exceeds,test-css,test-css_exceeds
