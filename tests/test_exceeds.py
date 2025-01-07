@@ -4,6 +4,7 @@ It should be weighted at 1 point for each type of test (2 is recommended)
 """
 import pytest
 import file_clerk.clerk as clerk
+from webcode_tk import css_tools as css
 from webcode_tk import html_tools as html
 
 project_dir = "project/"
@@ -47,3 +48,19 @@ def test_for_html_exceeds_number_of_image_files():
     image_files += clerk.get_all_files_of_type(project_dir, "gif")
     image_files += clerk.get_all_files_of_type(project_dir, "webp")
     assert len(image_files) >= 24
+
+
+advanced_properties_goals = {
+        "figure": {
+            "properties": ("box-shadow", "border-radius", "animation"),
+            "min_required": 2,
+        }
+    }
+advanced_properties_report = css.get_properties_applied_report(
+    project_dir,
+    advanced_properties_goals)
+
+
+@pytest.mark.parametrize("results", advanced_properties_report)
+def test_for_advanced_properties_applied(results):
+    assert "pass:" in results[:5]
