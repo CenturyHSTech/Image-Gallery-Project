@@ -38,7 +38,7 @@ jobs:
       with:
         test-name: 'Test HTML Exceeds'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
-        command: . ./venv/bin/activate && pytest tests/test_html_exceeds.py
+        command: . ./venv/bin/activate && pytest tests/test_htmlexceeds.py
         timeout: 10
         max-score: 1
   
@@ -58,7 +58,7 @@ jobs:
       with:
         test-name: 'Test CSS Exceeds'
         setup-command: . ./venv/bin/activate && pip install -r requirements.txt
-        command: . ./venv/bin/activate && pytest tests/test_css_exceeds.py
+        command: . ./venv/bin/activate && pytest tests/test_cssexceeds.py
         timeout: 10
         max-score: 1
 
@@ -66,8 +66,8 @@ jobs:
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST-HTML_RESULTS: "${{steps.test-html.outputs.result}}"
-        TEST-HTML_EXCEEDS: "${{steps.test-html_exceeds.outputs.result}}"
+        TEST-HTML_EXCEEDS: "${{steps.test-htmlexceeds.outputs.result}}"
         TEST-CSS_RESULTS: "${{steps.test-css.outputs.result}}"
-        TEST_CSS_EXCEEDS: "${{steps.test-css_exceeds.outputs.result}}"
+        TEST_CSS_EXCEEDS: "${{steps.test-cssexceeds.outputs.result}}"
       with:
-        runners: test-html,test-html_exceeds,test-css,test-css_exceeds
+        runners: test-html,test-htmlexceeds,test-css,test-cssexceeds

@@ -18,10 +18,12 @@ min_number_of_elements = html.get_number_of_elements_per_file(
     project_dir, min_required_elements
 )
 
+
 @pytest.fixture
 def html_files():
     html_files = html.get_all_html_files(project_dir)
     return html_files
+
 
 @pytest.mark.parametrize("file,element,num", min_number_of_elements)
 def test_for_html_exceeds_number_of_elements(file, element, num):
