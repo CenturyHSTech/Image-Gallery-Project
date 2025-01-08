@@ -57,14 +57,17 @@ def test_font_requirements(results):
 def test_for_colors_applied_to_headings(results):
     assert "pass" == results[:4]
 
+
 applied_properties_goals = {
         "figure": {
             "properties": ("margin", "padding", "border"),
         }
     }
 
-applied_properties_report = css.get_properties_applied_report(project_dir, 
-                                                              applied_properties_goals)
+applied_properties_report = css.get_properties_applied_report(
+    project_dir,
+    applied_properties_goals)
+
 
 @pytest.mark.parametrize("results", applied_properties_report)
 def test_figure_styles_applied(results):

@@ -1,6 +1,5 @@
 """
-For the Win: students should pass the tests for this file.
-It should be weighted at 1 point for each type of test (2 is recommended)
+For the Win students should pass the tests for this file.
 """
 import pytest
 import file_clerk.clerk as clerk
