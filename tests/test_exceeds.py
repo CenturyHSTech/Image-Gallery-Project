@@ -61,5 +61,5 @@ advanced_properties_report = css.get_properties_applied_report(
 
 
 @pytest.mark.parametrize("results", advanced_properties_report)
-def test_for_advanced_properties_applied(results):
+def test_for_css_exceeds_advanced_properties_applied(results):
     assert "pass:" in results[:5]
