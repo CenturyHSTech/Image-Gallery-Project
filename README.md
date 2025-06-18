@@ -1,38 +1,94 @@
-# Image-Gallery-Project
+
+# Image Gallery Project
+
+This project involves designing and coding an image gallery that displays a minimum of 9 thumbnail images. Each thumbnail links to a full-sized version, and the layout should be responsive and visually styled.
+
+---
+
+<details>
+<summary><strong>Project Overview</strong></summary>
+
 Students will design an image gallery project that showcases a minimum of 9 image thumbnails related to a theme, and these thumbnails link to a full-sized image.
 
-## Project Requirements
-Are listed in the README file in the `image_gallery` folder.
-You must meet all requirements in the following areas:
-* HTML - meet specific elements
-* Validity - passes the W3C Validator (HTML and CSS)
-* CSS - meet specific CSS requirements (layout, colors & fonts)
-* Design - your design score will be assessed based on the video captures &/or screen captures (you'll want to see the rubric in the assignment description for the course)
+The design should be a grid of images styled using fonts, colors, borders, and other CSS properties.
 
-## Instructions
-1. Place all of your project files (HTML, CSS, images, etc.) into the simple_html_page folder.
-2. Clone this project: `git clone `.
-3. Open the projec tin VS Code (double click on `Image-Gallery-Project.code-workspace`)
-4. Open the terminal (View > New Terminal).
-5. Install the Python extension: ***Python extension for Visual Studio Code***
-6. In the terminal, type `poetry shell`.
-    - You should see a line saying something like `Spawning shell within C:\Users\my_username\AppData\Local\pypoetry\Cache\virtualenvs\Image-Gallery-Project-IMtvp_MA-py3.9`
-7. Note the name of your virtual environment file, which will look something like `Image-Gallery-Project-IMtvp_MA-py3.9`
-8. Open the Command Palette 
-    - in the menu it's: View > Command Palette
-    - you could also type `Ctrl + Shift + P`
-9. Type Python: Select Interpreter
-    - if you see the virtual environment file, click it.
-    - if you don't see it, click `Select at Workspace level`
-10. Select the virtual environment file from above (it should show the word Poetry in blue on the right)
-    - if you don't see it, close VS Code and re-open it and repeat steps 8 and 9.
-11. Type `poetry update` and wait for everything to install.
-12. In the terminal, once everything is done installing, type `pytest`
-13. If that doesn't work, click the Testing icon (looks like a beaker), then click the blue `Configure Python Tests` button, then select `pytest pytest framework` and choose the `tests` folder.
-14. Place your content in the `image_gallery` folder.
-15. Store all images (both full size and thumbnail sized images).
-16. Select a theme for your images and style.
-17. Test your code by running pytest. The goal is to pass all tests.
-18. Record your final product before turning it in.
-19. The recording should show you resizing and or zooming in and out to show a variety of widths and demonstrate the flex layout is working without ever making your site look broken.
-20. Be sure to commit and push your changes at regular intervals, but particularly once you finish the project.
+</details>
+
+---
+<details>
+<summary><strong>Setup Instructions</strong></summary>
+
+1. Place all project files (HTML, CSS, images) into the `simple_html_page` folder.
+2. Clone the project: `git clone`
+3. Open in VS Code (`Image-Gallery-Project.code-workspace`)
+4. Open the terminal (View > New Terminal)
+5. Install the Python extension for VS Code
+6. Run `poetry shell` in the terminal
+7. Note your virtual environment name
+8. Open the Command Palette (`Ctrl + Shift + P`)
+9. Select the Python interpreter (look for the Poetry environment)
+10. Run `poetry update`
+11. Run `pytest` to test your code
+12. If needed, configure tests via the Testing icon
+13. Place your content in the `image_gallery` folder
+14. Store all images (full-size and thumbnails)
+15. Choose a theme for your gallery
+16. Record your final product showing responsiveness
+17. Commit and push changes regularly
+
+</details>
+
+---
+
+<details>
+<summary><strong>Project Requirements</strong></summary>
+
+### Folder and File Structure
+- Create a single web page named `index.html`
+- Create a folder titled `images` (all lowercase)
+- Include at least 18 images:
+  - 9 full-sized images
+  - 9 thumbnails (max width: 450px)
+
+### HTML Requirements
+- A single HTML file with:
+  - All standard HTML5 tags (`DOCTYPE`, `html`, `head`, `title`, `body`)
+  - A `header` with a `h1` title
+  - A `main` section containing at least 9 `figure` elements
+  - Each `figure` includes:
+    - A thumbnail image with `alt` text
+    - A link to the full-sized image
+    - A `figcaption` with a `cite` tag for image credit (linked if not self-taken)
+
+### CSS Requirements
+- Use at least one stylesheet or a `<style>` tag
+- Font pairing
+- Background and text colors with proper contrast:
+  - AAA rating for body text
+  - AA rating acceptable for headings
+- Use `flex` layout for the container
+- Style `figure` elements with `margin`, `border`, `padding`, and `background-color`
+
+### Design Requirements
+- High contrast and readability
+- Thematically consistent images and styling
+- Responsive layout that works across all screen sizes
+
+### Validity Requirements
+- No HTML or CSS errors (validated via W3C tools)
+
+</details>
+
+---
+
+<details>
+<summary><strong>Submission Requirements</strong></summary>
+
+- All changes must be committed and pushed to the repository
+- Submit a recording showing the gallery at various viewport widths
+- I will be looking for the following design recommendations:
+    + your ***layout remains intact*** at all screen widths
+    + there are ***no horizontal scrollbars*** (unless the screen is narrower than a single figure)
+</details>
+
+---
